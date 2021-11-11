@@ -2,6 +2,7 @@ package com.maximumteam.recruitment.backend.service;
 
 import com.maximumteam.recruitment.backend.dao.AccountRepository;
 import com.maximumteam.recruitment.backend.entity.Account;
+import com.maximumteam.recruitment.backend.util.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.result.UpdateResult;
@@ -23,22 +24,6 @@ public class AccountService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    /**
-     * 把 DBObject 转为 Update
-     * @param object
-     * @return
-     */
-    public static Update fromDBObjectExcludeNullFields(DBObject object) {
-        Update update = new Update();
-        for (String key : object.keySet()) {
-            Object value = object.get(key);
-            if (value != null){
-                update.set(key, value);
-            }
-        }
-        return update;
-    }
-
     public Account findAccountByEmail(String email) {
         return accountRepository.findAccountByEmail(email);
     }
@@ -56,7 +41,7 @@ public class AccountService {
         Query query = Query.query(Criteria.where("_id").is(account.getId()));
         DBObject dbObject = new BasicDBObject();
         mongoTemplate.getConverter().write(account, (Bson) dbObject);
-        Update update = fromDBObjectExcludeNullFields(dbObject);
+        Update update = Utils.fromDBObjectExcludeNullFields(dbObject);
         UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Account.class);
         return updateResult.getMatchedCount() > 0;
     }

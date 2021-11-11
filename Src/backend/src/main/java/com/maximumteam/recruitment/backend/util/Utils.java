@@ -1,5 +1,8 @@
 package com.maximumteam.recruitment.backend.util;
 
+import com.mongodb.DBObject;
+import org.springframework.data.mongodb.core.query.Update;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -43,6 +46,22 @@ public class Utils {
         }
 
         return strResult;
+    }
+
+    /**
+     * 把 DBObject 转为 Update
+     * @param object
+     * @return
+     */
+    public static Update fromDBObjectExcludeNullFields(DBObject object) {
+        Update update = new Update();
+        for (String key : object.keySet()) {
+            Object value = object.get(key);
+            if (value != null){
+                update.set(key, value);
+            }
+        }
+        return update;
     }
 }
 
