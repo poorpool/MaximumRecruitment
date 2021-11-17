@@ -28,8 +28,12 @@ public class AccountService {
         return accountRepository.findAccountByEmail(email);
     }
 
-    public void save(Account account) {
+    public boolean save(Account account) {
+        if (findAccountByEmail(account.getEmail()) != null) {
+            return false;
+        }
         accountRepository.save(account);
+        return true;
     }
 
     /**
