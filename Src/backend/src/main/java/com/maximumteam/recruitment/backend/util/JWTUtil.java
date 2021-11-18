@@ -28,6 +28,9 @@ public class JWTUtil {
     }
 
     public static String getEmail(String token) {
+        if (token == null) {
+            return null;
+        }
         try {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("email").asString();

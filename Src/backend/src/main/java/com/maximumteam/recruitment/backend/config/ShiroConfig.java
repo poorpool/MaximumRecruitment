@@ -1,7 +1,7 @@
 package com.maximumteam.recruitment.backend.config;
 
 import com.maximumteam.recruitment.backend.filter.JWTFilter;
-import com.maximumteam.recruitment.backend.service.MyRealm;
+import com.maximumteam.recruitment.backend.entity.MyRealm;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SubjectFactory;

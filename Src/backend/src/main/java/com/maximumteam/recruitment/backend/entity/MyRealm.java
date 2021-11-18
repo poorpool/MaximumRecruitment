@@ -1,7 +1,8 @@
-package com.maximumteam.recruitment.backend.service;
+package com.maximumteam.recruitment.backend.entity;
 
 import com.maximumteam.recruitment.backend.entity.Account;
 import com.maximumteam.recruitment.backend.entity.JWTToken;
+import com.maximumteam.recruitment.backend.service.AccountService;
 import com.maximumteam.recruitment.backend.util.JWTUtil;
 import com.maximumteam.recruitment.backend.util.Utils;
 import org.apache.shiro.authc.AuthenticationException;

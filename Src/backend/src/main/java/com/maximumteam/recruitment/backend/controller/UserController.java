@@ -30,13 +30,9 @@ public class UserController {
     }
 
     @RequestMapping("/test")
-    @RequiresRoles(value = {"admin", "manager"}, logical = Logical.OR)
+    @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public ReturnMessage boynextdoor() {
         return ReturnMessage.success();
     }
 
-    @PostMapping("/annn")
-    public ReturnMessage annn() {
-        return ReturnMessage.success();
-    }
 }

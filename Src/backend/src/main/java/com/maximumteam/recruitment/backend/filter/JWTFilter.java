@@ -1,13 +1,15 @@
 package com.maximumteam.recruitment.backend.filter;
 
 import com.maximumteam.recruitment.backend.entity.JWTToken;
+import com.maximumteam.recruitment.backend.entity.ReturnMessage;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.springframework.context.annotation.ComponentScan;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 
 public class JWTFilter extends AccessControlFilter {
     /*
@@ -41,7 +43,6 @@ public class JWTFilter extends AccessControlFilter {
             getSubject(servletRequest, servletResponse).login(jwtToken);
             //也就是subject.login(token)
         } catch (Exception e) {
-            e.printStackTrace();
             onLoginFail(servletResponse);
             //调用下面的方法向客户端返回错误信息
             return false;
@@ -55,7 +56,8 @@ public class JWTFilter extends AccessControlFilter {
     private void onLoginFail(ServletResponse response) throws IOException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        httpResponse.getWriter().write("login error");
+        httpResponse.setContentType("application/json");
+        httpResponse.getWriter().write("{\"code\":401,\"message\":\"Not Login\",\"data\":{}}");
     }
 }
 
