@@ -16,12 +16,15 @@ public class LoginController {
     private AccountService accountService;
 
     @PostMapping("/login")
-    public ReturnMessage login(@RequestParam String email, @RequestParam String password) {
+    public ReturnMessage login(@RequestBody Account give) {
+        String email = give.getEmail();
+        String password = give.getPassword();
         Account account = accountService.findAccountByEmail(email);
         if (account == null || !Objects.equals(password, account.getPassword())) {
             return ReturnMessage.fail(400).setMessage("用户名或密码错误");
         }
         String token = JWTUtil.sign(email, password);
-        return ReturnMessage.success().setParam("token", token);
+        account.setPassword(null);
+        return ReturnMessage.success().setParam("token", token).setParam("user", account);
     }
 }
