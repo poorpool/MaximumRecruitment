@@ -4,7 +4,7 @@
 
 import Vue from "vue";
 import VueRouter from 'vue-router'
-import Home from "../components/Home";
+import Home from "../views/Home";
 
 Vue.use(VueRouter)
 
@@ -13,6 +13,30 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    }
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import('../views/User'),
+    meta: {
+      requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    }
+  },
+  {
+    path: '/manager',
+    name: 'Manager',
+    component: () => import('../views/Manager'),
+    meta: {
+      requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin'),
     meta: {
       requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
     }

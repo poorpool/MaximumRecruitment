@@ -1,16 +1,21 @@
 <template>
   <div>
-  <v-btn @click="sendtest">sendtest</v-btn>
+    <navibar></navibar>
+  <v-btn @click="sendtest">测试后端权限系统</v-btn>
   <p>
   当前权限：{{ permission }}
   </p>
+    <p>
+      cyx：这里将来要做一个自动跳转，然后把这个页面设置为无权限页面。目前点右上角的标识跳转到各个页面去。
+    </p>
   </div>
 </template>
 
 <script>
+  import Navibar from "../components/Navibar";
   export default {
     name: 'Home',
-
+    components: {Navibar},
     data: () => ({
       permission: this.$store.getters.user
     }),
