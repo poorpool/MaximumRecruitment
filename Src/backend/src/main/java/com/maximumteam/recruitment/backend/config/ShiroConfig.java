@@ -2,6 +2,7 @@ package com.maximumteam.recruitment.backend.config;
 
 import com.maximumteam.recruitment.backend.filter.JWTFilter;
 import com.maximumteam.recruitment.backend.entity.MyRealm;
+import com.maximumteam.recruitment.backend.filter.StatelessAuthcFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SubjectFactory;
@@ -83,7 +84,7 @@ public class ShiroConfig {
         Map<String, Filter> filterMap = new HashMap<>();
         //这个地方其实另外两个filter可以不设置，默认就是
         filterMap.put("anon", new AnonymousFilter());
-        filterMap.put("jwt", new JWTFilter());
+        filterMap.put("jwt", new StatelessAuthcFilter());
         filterMap.put("logout", new LogoutFilter());
         shiroFilter.setFilters(filterMap);
 
