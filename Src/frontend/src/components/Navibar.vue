@@ -2,22 +2,14 @@
   <v-app-bar elevation="3" color="teal" dark>
 <!--    <v-app-bar-nav-icon></v-app-bar-nav-icon>-->
 
-    <v-toolbar-title>华中科技大学极大战队招新平台</v-toolbar-title>
+    <v-toolbar-title>华中科技大学极大战队招新平台 {{subname}}</v-toolbar-title>
 
     <v-spacer></v-spacer>
 
-<!--    <v-btn icon>-->
-<!--      <v-icon>mdi-heart</v-icon>-->
-<!--    </v-btn>-->
-
-<!--    <v-btn icon>-->
-<!--      <v-icon>mdi-magnify</v-icon>-->
-<!--    </v-btn>-->
-
     <v-menu left bottom>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
+        <v-btn text v-bind="attrs" v-on="on">
+          {{nickname}}
         </v-btn>
       </template>
 
@@ -46,7 +38,7 @@ import axios from "axios";
 
 export default {
   name: 'Navibar',
-
+  props: ['subname'],
   data: () => ({
   }),
   methods: {
@@ -60,7 +52,7 @@ export default {
       axios.defaults.headers['Authorization'] = '';
       window.sessionStorage.removeItem("token")
       this.$dialog.message.info('退出成功', {
-        position: 'top-right',
+        position: 'bottom-left',
         timeout: 2000
       })
       this.$router.push('/login');
@@ -69,6 +61,9 @@ export default {
   computed: {
     permission: function(){
       return this.$store.getters.user.permission
+    },
+    nickname: function() {
+      return this.$store.getters.user.nickname
     }
   }
 }

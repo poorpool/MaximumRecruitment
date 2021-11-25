@@ -31,10 +31,10 @@ public class StatelessAuthcFilter extends JWTFilter {
         HttpServletRequest httpReq = WebUtils.toHttp(request);
 
         /*系统重定向会默认把请求头清空，这里通过拦截器重新设置请求头，解决跨域问题*/
-        httpResp.addHeader("Access-Control-Allow-Origin", httpReq.getHeader("Origin"));
+//        httpResp.addHeader("Access-Control-Allow-Origin", httpReq.getHeader("Origin"));
         httpResp.addHeader("Access-Control-Allow-Headers", "*");
         httpResp.addHeader("Access-Control-Allow-Methods", "*");
-        httpResp.addHeader("Access-Control-Allow-Credentials", "true");
+//        httpResp.addHeader("Access-Control-Allow-Credentials", "true");
 
         return super.onAccessDenied(request, response);
     }

@@ -28,7 +28,7 @@
         }).then(res => {
           if (res.data.code === 200) {
             _this.$dialog.message.info('测试成功', {
-              position: 'top-right',
+              position: 'bottom-left',
               timeout: 2000
             })
           } else {

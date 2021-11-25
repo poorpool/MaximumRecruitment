@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navibar></navibar>
+    <navibar subname="管理员端"></navibar>
     <p>
 
       管理员界面

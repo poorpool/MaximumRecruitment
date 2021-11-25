@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navibar></navibar>
+    <navibar subname="选手端"></navibar>
     <p>选手界面</p>
   </div>
 </template>

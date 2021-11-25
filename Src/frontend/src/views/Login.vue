@@ -92,7 +92,7 @@
             this.$store.commit("SET_TOKEN", token);
             axios.defaults.headers['Authorization'] = token;
             _this.$dialog.message.info('登录成功', {
-              position: 'top-right',
+              position: 'bottom-left',
               timeout: 2000
             })
             this.$router.push('/');

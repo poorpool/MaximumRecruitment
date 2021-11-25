@@ -77,4 +77,11 @@ public class AccountTest {
         list.add("fakeId");
         System.out.println(accountService.batchModifyPermission(list, 1));
     }
+
+    @Test
+    void findAccountByPage() {
+        int page = 1;
+        int cnt = 5;
+        System.out.println(accountService.getAccountsByPage(page, cnt).toList());
+    }
 }
