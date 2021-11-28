@@ -8,6 +8,8 @@ import com.mongodb.DBObject;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -28,8 +30,12 @@ public class AccountService {
         return accountRepository.findAccountByEmail(email);
     }
 
-    public void save(Account account) {
+    public boolean save(Account account) {
+        if (findAccountByEmail(account.getEmail()) != null) {
+            return false;
+        }
         accountRepository.save(account);
+        return true;
     }
 
     /**
@@ -60,5 +66,13 @@ public class AccountService {
         update.set("permission", permission);
         UpdateResult updateResult = mongoTemplate.updateMulti(query, update, Account.class);
         return updateResult.getMatchedCount() > 0;
+    }
+
+    public Page<Account> getAccountsByPage(int page, int cnt) {
+        if (page < 1) {
+            page = 1;
+        }
+        Page<Account> pages = accountRepository.findAll(PageRequest.of(page - 1, cnt));
+        return pages;
     }
 }

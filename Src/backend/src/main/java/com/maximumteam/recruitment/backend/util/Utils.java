@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Utils {
 
@@ -12,11 +14,9 @@ public class Utils {
         return SHA(strText, "SHA-256");
     }
 
-
     public static String SHA512(final String strText) {
         return SHA(strText, "SHA-512");
     }
-
 
     public static String SHAMD5(String strText) {
         return SHA(strText, "MD5");
@@ -62,6 +62,20 @@ public class Utils {
             }
         }
         return update;
+    }
+
+    public static List<String> permissionToRoles(int permission) {
+        List<String> ret = new ArrayList<>();
+        if ((permission & 1) == 1) {
+            ret.add("user");
+        }
+        if ((permission & 2) == 2) {
+            ret.add("manager");
+        }
+        if ((permission & 4) == 4) {
+            ret.add("admin");
+        }
+        return ret;
     }
 }
 
