@@ -42,6 +42,14 @@ const routes = [
     }
   },
   {
+    path: '/manager/concrete/:recruitmentId',
+    name: 'Concrete',
+    component: () => import('../views/manager/Concrete'),
+    meta: {
+      requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    }
+  },
+  {
     path: '/admin',
     name: 'Admin',
     component: () => import('../views/Admin'),

@@ -59,7 +59,7 @@ public class RecruitmentController {
     }
 
     @GetMapping("/{id}")
-    @RequiresRoles(value = {"admin"}, logical = Logical.OR)
+    @RequiresRoles(value = {"admin", "manager", "user"}, logical = Logical.OR)
     public ReturnMessage getRecruitmentById(@PathVariable String id) {
         return ReturnMessage.success().setParam("recruitment", recruitmentService.findById(id));
     }

@@ -9,4 +9,5 @@ public interface StudentOfRecruitmentRepository extends MongoRepository<StudentO
     StudentOfRecruitment findStudentOfRecruitmentsByRecruitmentIdAndUserId(String recruitmentId,
                                                                            String userId);
     List<StudentOfRecruitment> findStudentOfRecruitmentsByUserId(String userId);
+    List<StudentOfRecruitment> findStudentOfRecruitmentsByRecruitmentId(String recruitmentId);
 }
