@@ -22,8 +22,11 @@
                   label="密码"
                   required
               ></v-text-field>
-
-
+              <a href="/register">
+                <p>
+                  没有帐号？注册
+                </p>
+              </a>
               <v-btn
                   :disabled="!valid"
                   color="success"

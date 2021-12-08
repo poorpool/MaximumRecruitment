@@ -18,17 +18,6 @@ public class UserController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/register")
-    public ReturnMessage register(@RequestBody @Validated Account account) {
-        account.setPermission(1);
-        boolean ret = accountService.save(account);
-        if (!ret) {
-            return ReturnMessage.fail(400).setMessage("邮箱已被使用");
-        } else {
-            return ReturnMessage.success();
-        }
-    }
-
     @RequestMapping("/get")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public ReturnMessage getAccountsByPage(@RequestParam int page, @RequestParam int itemsPerPage) {

@@ -1,6 +1,7 @@
 package com.maximumteam.recruitment.backend.service;
 
 import com.maximumteam.recruitment.backend.dao.RecruitmentRepository;
+import com.maximumteam.recruitment.backend.entity.Account;
 import com.maximumteam.recruitment.backend.entity.Recruitment;
 import com.maximumteam.recruitment.backend.util.Utils;
 import com.mongodb.BasicDBObject;
@@ -8,6 +9,8 @@ import com.mongodb.DBObject;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -47,9 +50,15 @@ public class RecruitmentService {
         recruitmentRepository.delete(recruitment);
     }
 
-    public List<Recruitment> findAll() {
-        return recruitmentRepository.findAll();
+//    public List<Recruitment> findAll() {
+//        return recruitmentRepository.findAll();
+//    }
+
+    public Page<Recruitment> getRecruitmentsByPage(int page, int cnt) {
+        if (page < 1) {
+            page = 1;
+        }
+        Page<Recruitment> pages = recruitmentRepository.findAll(PageRequest.of(page - 1, cnt));
+        return pages;
     }
-
-
 }

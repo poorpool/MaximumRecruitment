@@ -54,6 +54,9 @@
       </v-card>
     </v-dialog>
     <v-card-text>
+      <p>
+        cyx：这里应该倒序显示、权限改成汉字、加上多选框
+      </p>
       <v-data-table
           :headers="accountsHeader"
           :items="accounts"

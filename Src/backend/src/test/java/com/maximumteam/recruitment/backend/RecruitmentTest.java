@@ -27,7 +27,7 @@ public class RecruitmentTest {
 
     @Test
     void selectTest() {
-        System.out.println(recruitmentService.findAll());
+//        System.out.println(recruitmentService.findAll());
     }
 
     @Test
