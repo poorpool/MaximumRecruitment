@@ -44,4 +44,9 @@ public class RecruitmentTest {
         recruitment.setId("618d08a191284b6b3f2fc3ac");
         recruitmentService.delete(recruitment);
     }
+
+    @Test
+    void getAllAvailableRecruitmentsTest() {
+        System.out.println(recruitmentService.getAllAvailableRecruitments());
+    }
 }

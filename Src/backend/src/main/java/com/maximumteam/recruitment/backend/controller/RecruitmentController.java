@@ -21,7 +21,6 @@ public class RecruitmentController {
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public ReturnMessage upsert(@RequestBody @Validated Recruitment recruitment) {
         String id = recruitment.getId();
-        System.out.println(recruitment);
         boolean result = true;
         if (id == null || id.equals("")) {
             recruitmentService.save(recruitment);
@@ -50,5 +49,18 @@ public class RecruitmentController {
         recruitment.setId(id);
         recruitmentService.delete(recruitment);
         return ReturnMessage.success();
+    }
+
+    @GetMapping("/getAvailable")
+    @RequiresRoles(value = {"admin", "manager", "user"}, logical = Logical.OR)
+    public ReturnMessage getAllAvailableRecruitments() {
+        return ReturnMessage.success().setParam("recruitments",
+                recruitmentService.getAllAvailableRecruitments());
+    }
+
+    @GetMapping("/{id}")
+    @RequiresRoles(value = {"admin"}, logical = Logical.OR)
+    public ReturnMessage getRecruitmentById(@PathVariable String id) {
+        return ReturnMessage.success().setParam("recruitment", recruitmentService.findById(id));
     }
 }

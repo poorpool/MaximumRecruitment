@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -50,9 +51,9 @@ public class RecruitmentService {
         recruitmentRepository.delete(recruitment);
     }
 
-//    public List<Recruitment> findAll() {
-//        return recruitmentRepository.findAll();
-//    }
+    public Recruitment findById(String id) {
+        return recruitmentRepository.findById(id);
+    }
 
     public Page<Recruitment> getRecruitmentsByPage(int page, int cnt) {
         if (page < 1) {
@@ -60,5 +61,12 @@ public class RecruitmentService {
         }
         Page<Recruitment> pages = recruitmentRepository.findAll(PageRequest.of(page - 1, cnt));
         return pages;
+    }
+
+    public List<Recruitment> getAllAvailableRecruitments() {
+        Date date = new Date();
+        Query query = Query.query(Criteria.where("startTime").lte(date)
+                .and("endTime").gt(date));
+        return mongoTemplate.find(query, Recruitment.class);
     }
 }

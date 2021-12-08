@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,9 +24,11 @@ public class Recruitment implements Serializable {
     @NotBlank(message = "招新名称不能为空")
     private String name;
 
+    @Indexed
     @NotNull(message = "日期不能为空")
     private Date startTime;
 
+    @Indexed
     @NotNull(message = "日期不能为空")
     private Date endTime;
 

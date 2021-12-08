@@ -26,6 +26,14 @@ const routes = [
     }
   },
   {
+    path: '/user/specific/:recruitmentId',
+    name: 'Specific',
+    component: () => import('../views/user/Specific'),
+    meta: {
+      requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+    }
+  },
+  {
     path: '/manager',
     name: 'Manager',
     component: () => import('../views/Manager'),

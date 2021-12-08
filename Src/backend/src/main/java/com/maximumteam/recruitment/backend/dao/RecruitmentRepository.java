@@ -5,4 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface RecruitmentRepository extends PagingAndSortingRepository<Recruitment,Integer> {
+    Recruitment findById(String id);
 }
