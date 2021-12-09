@@ -10,6 +10,7 @@ import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -44,6 +45,9 @@ public class AccountService {
      */
     public boolean update(Account account) {
         account.setEmail(null);
+        if (account.getPassword() != null && account.getPassword().equals("")) {
+            account.setPassword(null);
+        }
         Query query = Query.query(Criteria.where("_id").is(account.getId()));
         DBObject dbObject = new BasicDBObject();
         mongoTemplate.getConverter().write(account, (Bson) dbObject);
@@ -72,7 +76,8 @@ public class AccountService {
         if (page < 1) {
             page = 1;
         }
-        Page<Account> pages = accountRepository.findAll(PageRequest.of(page - 1, cnt));
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+        Page<Account> pages = accountRepository.findAll(PageRequest.of(page - 1, cnt, sort));
         return pages;
     }
 }

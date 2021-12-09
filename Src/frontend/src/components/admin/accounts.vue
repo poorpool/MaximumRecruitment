@@ -32,7 +32,10 @@
               type="number"
               label="权限"
               required
+              readonly
           ></v-text-field>
+          <v-checkbox v-model="selectPermission" label="管理员" value="2"></v-checkbox>
+          <v-checkbox v-model="selectPermission" label="用户" value="1"></v-checkbox>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -55,7 +58,7 @@
     </v-dialog>
     <v-card-text>
       <p>
-        cyx：这里应该倒序显示、权限改成汉字、加上多选框
+        cyx：加上多选框
       </p>
       <v-data-table
           :headers="accountsHeader"
@@ -65,6 +68,11 @@
           :loading="accountsLoading"
           class="elevation-1"
       >
+        <template v-slot:item.permission ="{item}">
+          <v-chip v-if="(item.permission&4)===4" color="purple" dark>超级管理员</v-chip>
+          <v-chip v-if="(item.permission&2)===2" color="blue" dark>管理员</v-chip>
+          <v-chip v-if="(item.permission&1)===1" color="green" dark>用户</v-chip>
+        </template>
         <template v-slot:item.actions ="{item}">
           <v-icon
               small
@@ -99,6 +107,7 @@
       permissionrules: [
         v => v >= 0 && v <= 3 || '权限应在0至3之间'
       ],
+      selectPermission: [],
       ifEditAccount: false,
       editData: {},
       accountsTotal: 0,
@@ -135,11 +144,28 @@
         },
         deep: true,
       },
+      selectPermission: {
+        handler () {
+          this.editData.permission = 0;
+          for (let x of this.selectPermission) {
+            this.editData.permission |= x;
+          }
+        },
+        deep: true,
+      }
     },
     methods: {
       editAccount(item) {
-        this.ifEditAccount = true;
         this.editData = item;
+        let permission = item.permission;
+        this.selectPermission = [];
+        if ((permission & 2) === 2) {
+          this.selectPermission.push("2");
+        }
+        if ((permission & 1) === 1) {
+          this.selectPermission.push("1");
+        }
+        this.ifEditAccount = true;
       },
       getAccountsByPage () {
         this.accountsLoading = true;
@@ -233,6 +259,6 @@
       }
     },
     computed: {
-    }
+    },
   }
 </script>
