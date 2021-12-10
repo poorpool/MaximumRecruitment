@@ -80,4 +80,8 @@ public class AccountService {
         Page<Account> pages = accountRepository.findAll(PageRequest.of(page - 1, cnt, sort));
         return pages;
     }
+
+    public List<Account> findAll() {
+        return accountRepository.findAll();
+    }
 }

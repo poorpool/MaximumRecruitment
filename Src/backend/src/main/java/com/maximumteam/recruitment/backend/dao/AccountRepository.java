@@ -10,4 +10,6 @@ public interface AccountRepository extends PagingAndSortingRepository<Account,In
     Account findAccountByEmail(String email);
 
     void deleteByIdIn(List<String> ids);
+
+    List<Account> findAll();
 }
