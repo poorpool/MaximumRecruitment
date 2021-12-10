@@ -167,11 +167,6 @@
       accountsOption: {},
       accountsHeader: [
         {
-          text: '选择',
-          sortable: false,
-          value: 'select'
-        },
-        {
           text: '电子邮件',
           sortable: false,
           value: 'email'

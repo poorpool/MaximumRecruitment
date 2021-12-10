@@ -54,16 +54,6 @@ public class UserController {
                 .setParam("accounts", ret.toList());
     }
 
-
-//    @DeleteMapping("/{id}")
-//    @RequiresRoles(value = {"admin"}, logical = Logical.OR)
-//    public ReturnMessage deleteAccounts(@PathVariable String id) {
-//        Account account = new Account();
-//        account.setId(id);
-//        accountService.delete(account);
-//        return ReturnMessage.success();
-//    }
-
     @PutMapping("/update")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public ReturnMessage update(@RequestBody Account account) {

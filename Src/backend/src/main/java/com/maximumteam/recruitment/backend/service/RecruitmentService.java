@@ -11,6 +11,7 @@ import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -59,7 +60,8 @@ public class RecruitmentService {
         if (page < 1) {
             page = 1;
         }
-        Page<Recruitment> pages = recruitmentRepository.findAll(PageRequest.of(page - 1, cnt));
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+        Page<Recruitment> pages = recruitmentRepository.findAll(PageRequest.of(page - 1, cnt, sort));
         return pages;
     }
 
@@ -68,5 +70,9 @@ public class RecruitmentService {
         Query query = Query.query(Criteria.where("startTime").lte(date)
                 .and("endTime").gt(date));
         return mongoTemplate.find(query, Recruitment.class);
+    }
+
+    public List<Recruitment> findAll() {
+        return recruitmentRepository.findAll();
     }
 }

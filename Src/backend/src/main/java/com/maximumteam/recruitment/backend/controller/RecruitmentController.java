@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/recruitment")
 public class RecruitmentController {
@@ -37,6 +39,11 @@ public class RecruitmentController {
     @RequestMapping("/get")
     @RequiresRoles(value = {"admin", "manager", "user"}, logical = Logical.OR)
     public ReturnMessage getRecruitmentsByPage(@RequestParam int page, @RequestParam int itemsPerPage) {
+        if (itemsPerPage < 0) {
+            List<Recruitment> recruitments = recruitmentService.findAll();
+            return ReturnMessage.success().setParam("total", recruitments.size())
+                    .setParam("recruitments", recruitments);
+        }
         Page<Recruitment> ret = recruitmentService.getRecruitmentsByPage(page, itemsPerPage);
         return ReturnMessage.success().setParam("total", ret.getTotalElements())
                 .setParam("recruitments", ret.toList());
