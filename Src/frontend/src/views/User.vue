@@ -31,14 +31,16 @@
             <v-card-text>
               <v-alert type="info" v-if="studentOfRecruitments.length === 0">还没有加入任何招新</v-alert>
               <div v-else>
-                <p>
+                <v-alert text type="info">
                   点击任何卡片查看招新详情
-                </p>
-                <p>
-                  cyx：这里要加上所有状态、现在状态、招新的状态的展示
-                </p>
+                </v-alert>
                 <v-card v-for="(sor,index) in studentOfRecruitments" :key="sor.id" @click="toSpecificRecruitment(sor.recruitmentId)">
-                  <v-card-title>{{recruitments[index].name}}</v-card-title>
+                  <v-card-title>
+                    {{recruitments[index].name}}
+                  </v-card-title>
+                  <v-card-text>
+                    <ShowSteps :steps="recruitments[index].steps" :now-step="sor.nowStep" :end-status="sor.isEnd"></ShowSteps>
+                  </v-card-text>
                 </v-card>
               </div>
             </v-card-text>
@@ -51,9 +53,10 @@
 
 <script>
   import Navibar from "../components/Navibar";
+  import ShowSteps from "../components/user/ShowSteps";
   export default {
     name: 'User',
-    components: {Navibar},
+    components: {ShowSteps, Navibar},
     data: () => ({
       availableRecruitments: [],
       studentOfRecruitments: [],

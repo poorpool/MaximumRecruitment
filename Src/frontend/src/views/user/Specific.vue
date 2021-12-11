@@ -7,13 +7,59 @@
         <v-col>
           <v-card>
             <v-card-title>
+              <v-btn
+                  icon
+                  color="blue"
+                  @click="$router.push('/user')"
+              >
+                <v-icon>mdi-arrow-left</v-icon>
+              </v-btn>
               {{ recruitment.name }}
             </v-card-title>
             <v-card-text>
-              <p>cyx：这里应该能自己放弃招新和返回上一个页面</p>
-              <p>招新步骤：{{ recruitment.steps}}</p>
-              <p>招新开始时间：{{ recruitment.startTime }}</p>
-              <p>招新结束时间：{{ recruitment.endTime }}</p>
+              <v-container>
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                        :value="this.dateFormat('yyyy-MM-dd', new Date(Date.parse(this.recruitment.startTime)))"
+                        label="开始日期"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                        :value="this.dateFormat('HH:mm:SS', new Date(Date.parse(this.recruitment.startTime)))"
+                        label="开始时间"
+                        prepend-icon="mdi-clock-time-four-outline"
+                        readonly
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+
+              <v-container>
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                        :value="this.dateFormat('yyyy-MM-dd', new Date(Date.parse(this.recruitment.endTime)))"
+                        label="结束日期"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                        :value="this.dateFormat('HH:mm:SS', new Date(Date.parse(this.recruitment.endTime)))"
+                        label="结束时间"
+                        prepend-icon="mdi-clock-time-four-outline"
+                        readonly
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+              <ShowSteps :steps="recruitment.steps" :now-step="studentOfRecruitment.nowStep" :end-status="studentOfRecruitment.isEnd" v-if="registered"></ShowSteps>
+              <v-divider></v-divider>
               <v-alert
                   type="success" v-if="registered && studentOfRecruitment.isEnd === 0"
               >你已经加入了这个招新，目前处于 {{recruitment.steps[studentOfRecruitment.nowStep]}} 步骤</v-alert>
@@ -91,9 +137,10 @@
 
 <script>
 import Navibar from "../../components/Navibar";
+import ShowSteps from "../../components/user/ShowSteps";
 export default {
   name: 'Specific',
-  components: {Navibar},
+  components: {ShowSteps, Navibar},
   data: () => ({
     notEmptyRules: [
       v => !!v || '不能为空',
@@ -199,6 +246,25 @@ export default {
           text: error.toString()
         });
       });
+    },
+    dateFormat(fmt, date) {
+      let ret;
+      const opt = {
+        "y+": date.getFullYear().toString(),        // 年
+        "M+": (date.getMonth()+1).toString(),     // 月
+        "d+": date.getDate().toString(),            // 日
+        "H+": date.getHours().toString(),           // 时
+        "m+": date.getMinutes().toString(),         // 分
+        "S+": date.getSeconds().toString()          // 秒
+        // 有其他格式化字符需求可以继续添加，必须转化成字符串
+      };
+      for (let k in opt) {
+        ret = new RegExp("(" + k + ")").exec(fmt);
+        if (ret) {
+          fmt = fmt.replace(ret[1], (ret[1].length === 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+        }
+      }
+      return fmt;
     }
   },
   computed: {
