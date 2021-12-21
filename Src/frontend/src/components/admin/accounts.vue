@@ -317,7 +317,7 @@
           _this.editData.password = sha256(_this.editData.email + _this.editData.password).toString();
         }
         this.axios({
-          method: 'put',
+          method: 'post',
           url: '/user/update',
           data: _this.editData
         }).then(res => {

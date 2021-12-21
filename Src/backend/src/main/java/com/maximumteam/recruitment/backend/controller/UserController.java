@@ -54,7 +54,7 @@ public class UserController {
                 .setParam("accounts", ret.toList());
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public ReturnMessage update(@RequestBody Account account) {
         if (account.getPermission() < 0 || account.getPermission() > 3) {

@@ -37,7 +37,7 @@ public class RecruitmentController {
     }
 
     @RequestMapping("/get")
-    @RequiresRoles(value = {"admin", "manager", "user"}, logical = Logical.OR)
+    @RequiresRoles(value = {"admin", "manager"}, logical = Logical.OR)
     public ReturnMessage getRecruitmentsByPage(@RequestParam int page, @RequestParam int itemsPerPage) {
         if (itemsPerPage < 0) {
             List<Recruitment> recruitments = recruitmentService.findAll();

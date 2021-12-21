@@ -13,6 +13,7 @@ import VueAxios from 'vue-axios'
 import vuetify from "./plugins/vuetify";
 
 axios.defaults.timeout = 5000;  // 超时时间
+// axios.defaults.baseURL = 'http://114.116.215.101:5050/'
 axios.defaults.baseURL = 'http://140.210.139.46:5050/'
 //axios.defaults.baseURL = 'http://localhost:5050/'; // 后端接口
 
