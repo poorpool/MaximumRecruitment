@@ -49,9 +49,9 @@ public class RecruitmentController {
                 .setParam("recruitments", ret.toList());
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/delete")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
-    public ReturnMessage deleteRecruitment(@PathVariable String id) {
+    public ReturnMessage deleteRecruitment(@RequestParam String id) {
         Recruitment recruitment = new Recruitment();
         recruitment.setId(id);
         recruitmentService.delete(recruitment);

@@ -400,8 +400,11 @@ export default {
         return ;
       }
       this.axios({
-        method: 'delete',
-        url: '/recruitment/' + item.id
+        method: 'post',
+        url: '/recruitment/delete',
+        params: {
+          id: item.id
+        }
       }).then(res => {
         if (res.data.code === 200) {
           _this.$dialog.message.info('删除招新成功', {

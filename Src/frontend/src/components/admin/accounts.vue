@@ -292,7 +292,14 @@
       async batchDelete() {
         let ids = [];
         for (let x of this.selectAccounts) {
-          ids.push(x.id);
+          if ((x.permission&4)===0) {
+            ids.push(x.id);
+          } else {
+            this.$dialog.message.error('禁止删除超级管理员', {
+              position: 'bottom-left',
+              timeout: 1000
+            })
+          }
         }
         const res = await this.$dialog.confirm({
           text: '你确认要删除 ' + ids.length + ' 个用户吗？',
@@ -301,6 +308,7 @@
         if (res !== true) {
           return ;
         }
+        this.selectAccounts = [];
         this.realDelete(ids);
       },
       submitEdit() {
@@ -337,8 +345,16 @@
         let _this = this;
         let ids = [];
         for (let x of this.selectAccounts) {
-          ids.push(x.id);
+          if ((x.permission&4)===0) {
+            ids.push(x.id);
+          } else {
+            this.$dialog.message.error('禁止修改超级管理员', {
+              position: 'bottom-left',
+              timeout: 1000
+            });
+          }
         }
+        this.selectAccounts = [];
         this.axios({
           method: 'post',
           url: '/user/batchUpdate',
